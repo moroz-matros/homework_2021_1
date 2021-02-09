@@ -120,4 +120,52 @@ QUnit.module('Тестируем функцию sorting', function () {
 
 		assert.deepEqual(actual, expected);
 	});
+
+	QUnit.test('sorting сортирует массив со значениями как численных, так и ' +
+		'строковых типов', function (assert) {
+		const initial = [
+			{prop1: 30},
+			{prop1: '1000'},
+			{prop1: 4},
+			{prop1: '200'}
+		];
+		const actual = sorting(initial, [ 'prop1' ]);
+
+		const expected = [
+			{prop1: 4},
+			{prop1: 30},
+			{prop1: '1000'},
+			{prop1: '200'}
+		];
+
+		assert.deepEqual(actual, expected);
+	});
+
+	QUnit.test('sorting корректно работает с null в свойствах', function (assert) {
+		const initial = [
+			{prop1: 3, id: 1},
+			{prop1: 3, id: 2},
+			{prop1: 1, id: 1},
+			{prop1: 1, id: 2},
+			{prop1: 4, id: 1},
+			{prop1: 4, id: 2},
+			{prop1: 2, id: 1},
+			{prop1: 2, id: 2}
+		];
+		const actual = sorting(initial, [null]);
+
+		const expected = [
+			{prop1: 3, id: 1},
+			{prop1: 3, id: 2},
+			{prop1: 1, id: 1},
+			{prop1: 1, id: 2},
+			{prop1: 4, id: 1},
+			{prop1: 4, id: 2},
+			{prop1: 2, id: 1},
+			{prop1: 2, id: 2}
+		];
+
+		assert.deepEqual(actual, expected);
+	});
+
 });
