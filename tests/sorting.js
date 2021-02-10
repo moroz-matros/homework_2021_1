@@ -168,4 +168,15 @@ QUnit.module('Тестируем функцию sorting', function () {
 		assert.deepEqual(actual, expected);
 	});
 
+	QUnit.test('sorting корректно обрабатывает неверные входные данные', function (assert) {
+		assert.expect(1);
+
+		const initial = 'tea';
+
+		assert.throws(
+			function () { new sorting(initial, "coffee"); },
+			function (err) { return err.name === 'TypeError' },
+			'Error thrown'
+		);
+	});
 });
