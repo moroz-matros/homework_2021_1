@@ -16,7 +16,7 @@
 
 const sorting = (initial, fields) => {
   if (!Array.isArray(initial) || !Array.isArray(fields)){
-    throw new TypeError("Неверные входные данные");
+    throw new TypeError('Неверные входные данные');
   }
 
   const copy = Object.assign([], initial);
