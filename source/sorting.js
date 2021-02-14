@@ -19,18 +19,25 @@ const sorting = (initial, fields) => {
     throw new TypeError('Неверные входные данные');
   }
 
-  const copy = Object.assign([], initial);
+  const copy = Object.assign([], [...initial]);
 
   fields.reverse().forEach(item => {
-      copy.sort((prev, next) => {
-        if (prev[item] < next[item]) {
-          return -1;
-        }
-        if (prev[item] > next[item]) {
-          return 1;
-        }
-        return 0;
-      })
+        copy.sort((prev, next) => {
+          if (typeof prev[item] == 'number' || typeof next[item] == 'number') {
+            if (prev[item] < next[item]) {
+              return -1;
+            }
+            if (prev[item] > next[item]) {
+              return 1;
+            }
+            return 0;
+          } else {
+            let collator = new Intl.Collator(undefined, {
+              caseFirst: 'upper'
+            });
+            return collator.compare(prev[item], next[item]);
+          }
+        })
     }
   )
   return copy;

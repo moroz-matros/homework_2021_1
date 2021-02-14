@@ -180,5 +180,105 @@ QUnit.module('Тестируем функцию sorting', function () {
     assert.throws(() => sorting(initial1, ['id', 'prop1']), TypeError);
   });
 
+  QUnit.test('sorting корректно сортирует числа в виде строк', function (assert) {
+    const initial = [
+      {prop1: '12'},
+      {prop1: '102'},
+      {prop1: '1'},
+      {prop1: '13'},
+      {prop1: '101'}
+    ];
+    const actual = sorting(initial, ['prop1']);
+
+    const expected = [
+      {prop1: '1'},
+      {prop1: '101'},
+      {prop1: '102'},
+      {prop1: '12'},
+      {prop1: '13'}
+    ];
+
+    assert.deepEqual(actual, expected);
+  });
+
+  QUnit.test('sorting корректно сортирует строки из символов латиницы', function (assert) {
+    const initial = [
+      {prop1: 'Hello'},
+      {prop1: 'How'},
+      {prop1: 'are'},
+      {prop1: 'You'}
+    ];
+    const actual = sorting(initial, ['prop1']);
+
+    const expected = [
+      {prop1: 'are'},
+      {prop1: 'Hello'},
+      {prop1: 'How'},
+      {prop1: 'You'}
+    ];
+
+    assert.deepEqual(actual, expected);
+  });
+
+  QUnit.test('sorting корректно сортирует строки из символов кириллицы', function (assert) {
+    const initial = [
+      {prop1: 'привет'},
+      {prop1: 'Как'},
+      {prop1: 'дела'},
+      {prop1: 'Действуй'}
+    ];
+    const actual = sorting(initial, ['prop1']);
+
+    const expected = [
+      {prop1: 'Действуй'},
+      {prop1: 'дела'},
+      {prop1: 'Как'},
+      {prop1: 'привет'}
+    ];
+
+    assert.deepEqual(actual, expected);
+  });
+
+  QUnit.test('sorting корректно сортирует строки из символов кириллицы и латиницы', function (assert) {
+    const initial = [
+      {prop1: 'Stранная'},
+      {prop1: 'запись'},
+      {prop1: 'neocheнь'},
+      {prop1: 'neпонятно'}
+    ];
+    const actual = sorting(initial, ['prop1']);
+
+    const expected = [
+      {prop1: 'neocheнь'},
+      {prop1: 'neпонятно'},
+      {prop1: 'Stранная'},
+      {prop1: 'запись'}
+    ];
+
+    assert.deepEqual(actual, expected);
+  });
+
+  QUnit.test('sorting корректно сортирует при наличии символов, кодирующихся вне общего правила', function (assert) {
+    const initial = [
+      {prop1: 'это'},
+      {prop1: 'Виновата'},
+      {prop1: 'ёлка'},
+      {prop1: 'Ёлка'},
+      {prop1: 'елка'},
+      {prop1: 'дадада'}
+    ];
+    const actual = sorting(initial, ['prop1']);
+
+    const expected = [
+      {prop1: 'Виновата'},
+      {prop1: 'дадада'},
+      {prop1: 'елка'},
+      {prop1: 'Ёлка'},
+      {prop1: 'ёлка'},
+      {prop1: 'это'}
+    ];
+
+    assert.deepEqual(actual, expected);
+  });
 
 });
